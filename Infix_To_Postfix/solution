@@ -1,0 +1,57 @@
+import java.util.*;
+class Main {
+    public static int prec(char ch){
+        switch(ch){
+         case '+':
+         case '-':
+             return 1;
+         case '*':
+         case '/':
+             return 2;
+         case '^':
+             return 3;
+        }
+        return -1;
+    }
+    public static String infixtopostfix(String s){
+        String ans=new String("");
+        Stack<Character> st=new Stack<>();
+        int i=0;
+        while(i<s.length()){
+         if(Character.isLetterOrDigit(s.charAt(i))){
+             ans=ans+s.charAt(i);
+         }
+         else if(s.charAt(i)=='('){
+             st.push(s.charAt(i));
+         }
+         else if(s.charAt(i)==')'){
+             while(!st.isEmpty() && st.peek()!='('){
+             ans=ans+st.pop();
+             }
+             if(!st.isEmpty() && st.peek()=='('){
+                 st.pop();
+             }
+         }
+         else{
+          while(!st.isEmpty()&& prec(s.charAt(i))<=prec(st.peek())){
+              ans=ans+st.pop();
+          }
+          st.push(s.charAt(i));
+         }
+         i++;
+        }
+        while(!st.isEmpty()){
+            if(st.peek()=='C'){
+                return "Invalid Exp";
+            }
+            ans+=st.pop();
+        }
+        return ans;
+        
+    }
+    public static void main(String[] args) {
+     String exp = "(p+q)*(m-n)";
+    System.out.println("Infix expression: " + exp);
+    System.out.println("Prefix expression: " + infixtopostfix(exp));  
+    }
+}
