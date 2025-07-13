@@ -1,0 +1,28 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+import java.util.*;
+class Main {
+  public static String postfixtoInfix(String s){
+      Stack<String>st=new Stack<>();
+      int i=0;
+      while(i<s.length()){
+         if(Character.isLetterOrDigit(s.charAt(i))){
+            st.push(Character.toString(s.charAt(i))); 
+         }
+         else{
+        String  t1=st.pop();
+        String  t2=st.pop();
+        String con="("+t2+s.charAt(i)+t1+")";
+        st.push(con);
+         }
+         i++;
+      }
+      return st.peek();
+  }
+    public static void main(String[] args) {
+     String postfix = "nm-qp+*";
+    System.out.println("Postfix expression: " + postfix);
+    System.out.println("Infix expression: " + postfixtoInfix(postfix));
+    }
+}
