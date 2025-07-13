@@ -1,0 +1,25 @@
+import java.util.*;
+class Main {
+  public static String prefixtoInfix(String s){
+      Stack<String>st=new Stack<>();
+      int i=s.length()-1;
+      while(i>=0){
+         if(Character.isLetterOrDigit(s.charAt(i))){
+            st.push(Character.toString(s.charAt(i))); 
+         }
+         else{
+        String  t1=st.pop();
+        String  t2=st.pop();
+        String con="("+t1+s.charAt(i)+t2+")";
+        st.push(con);
+         }
+         i--;
+      }
+      return st.peek();
+  }
+    public static void main(String[] args) {
+     String prefix = "*+PQ-MN";
+        System.out.println("Prefix expression: " + prefix);
+        System.out.println("Infix expression: " + prefixtoInfix(prefix));
+    }
+}
