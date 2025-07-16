@@ -1,0 +1,1 @@
+create a stack store array price and span then use while loop and till price<= st.peek()[0] pop span and increase count of span of that element else push price and span into stack .return span
