@@ -1,0 +1,24 @@
+✅ Logic of Code:
+Step 1: Create a 2D array cars[][] where each entry stores [position, speed] for each car.
+
+Step 2: Sort the cars array in descending order of position (farthest from target first):
+
+
+Arrays.sort(cars, (a, b) -> b[0] - a[0]);
+This way, we process the car closest to the target first.
+
+Step 3: Create a stack to keep track of time taken by each fleet to reach the target.
+
+Step 4: For each car:
+
+Calculate time taken to reach the target:
+
+
+time = (target - position) / speed
+If stack is empty OR this car takes more time than the car in front (top of stack), then:
+
+It forms a new fleet, so push its time onto the stack.
+
+Else (this car is faster or equal), it will catch up to the fleet in front and merge — no push.
+
+Step 5: At the end, stack.size() gives the total number of fleets.
