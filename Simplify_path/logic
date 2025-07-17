@@ -1,0 +1,53 @@
+🧩 Problem Summary:
+Given a Unix-style file path (like "/a/./b/../../c/"), simplify it by removing:
+
+"." → current directory (no effect)
+
+".." → move one directory up (pop from stack)
+
+Extra slashes /
+
+Goal: Return the simplified canonical path starting from root /.
+
+✅ Logic of the Code:
+Step 1: Create a stack st to simulate folder navigation.
+
+Step 2: Split the input path using / as the delimiter:
+
+java
+Copy
+Edit
+String[] ans = path.split("/");
+This gives components like ["", "..", "a", ".", "b"].
+
+Step 3: Iterate over each part of the path (ans[i]):
+
+If ans[i] == "..":
+
+Pop the top of the stack if it's not empty (go up one directory).
+
+Else if ans[i] is:
+
+Not empty (!cur.equals(""))
+
+Not "." (current dir, which does nothing)
+
+Not ".." again (to prevent double pushing)
+→ Then push ans[i] onto the stack (valid directory name).
+
+Step 4: After the loop, the stack contains the valid path parts in order.
+
+Step 5: Join the elements of the stack using / and prepend a / to make the full absolute path:
+
+java
+Copy
+Edit
+return "/" + String.join("/", st);
+📌 Key Edge Cases Handled:
+Multiple slashes like "//" → empty strings skipped.
+
+. → ignored.
+
+.. → go up (pop stack) only if the stack isn't empty.
+
+If everything is removed, we return / as the root.
