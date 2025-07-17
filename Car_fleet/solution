@@ -1,0 +1,20 @@
+class Solution {
+    public int carFleet(int target, int[] position, int[] speed) {
+        Stack<Float>st=new Stack<>();
+        int cars[][]=new int[position.length][2];
+        for(int i=0;i<position.length;i++){
+          cars[i][0]=position[i];
+          cars[i][1]=speed[i];
+        }
+        Arrays.sort(cars,(a,b)->b[0]-a[0]);
+        for(int i=0;i<cars.length;i++){
+         float pos=cars[i][0];
+         float spd=cars[i][1];
+         float time=(target-pos)/(spd);
+         if(st.isEmpty()|| time>st.peek()){
+            st.push(time);
+         }
+        }
+        return st.size();
+    }
+}
