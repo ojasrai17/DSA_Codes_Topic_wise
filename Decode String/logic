@@ -1,0 +1,62 @@
+✅ Logic in Bullet Points:
+Initialize:
+
+Stack<Integer> st: to store repeat counts (numbers).
+
+Stack<StringBuilder> st1: to store intermediate string states.
+
+StringBuilder cur: stores the current working decoded string.
+
+int num: to build multi-digit numbers.
+
+Iterate through the string s:
+
+🔢 If character is a digit:
+
+Build the full number:
+num = num * 10 + (s.charAt(i) - '0');
+(handles multi-digit like "23[a]")
+
+🔓 If character is '[':
+
+Push num onto st (repeat count).
+
+Push current cur onto st1 (string before this bracket block).
+
+Reset cur to start a new string section.
+
+Reset num = 0.
+
+🔒 If character is ']':
+
+Pop repeat count from st.
+
+Pop previous string from st1.
+
+Repeat cur that many times and append to the popped string.
+
+Update cur = temp for further processing.
+
+🔤 If character is a letter:
+
+Append it to cur.
+
+Return final decoded string:
+
+After the loop ends, cur.toString() contains the final result.
+
+🧠 Example Flow for "3[a2[c]]":
+Char	Action	num	st	st1	cur
+3	digit → num = 3	3	[]	[]	""
+[	push 3, push "", reset cur	0	[3]	[""]	""
+a	append to cur	0	[3]	[""]	"a"
+2	digit → num = 2	2	[3]	[""]	"a"
+[	push 2, push "a"	0	[3,2]	["", "a"]	""
+c	append to cur	0	[3,2]	["", "a"]	"c"
+]	pop 2, pop "a", build → "acc"	-	[3]	[""]	"acc"
+]	pop 3, pop "", build → "accaccacc"	-	[]	[]	"accaccacc"
+
+⚙️ Time & Space Complexity:
+Time: O(n), where n = length of input string.
+
+Space: O(n) due to stack and string building.
