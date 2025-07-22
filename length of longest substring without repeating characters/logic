@@ -1,0 +1,89 @@
+✅ Logic of the Code (Step-by-step)
+🔁 Sliding Window + HashMap Approach
+Purpose: Find the length of the longest substring without repeating characters.
+
+Technique: Use two pointers (left and right) to maintain a dynamic window. Use a HashMap to store the most recent index of each character.
+
+🧠 Algorithm Breakdown (Line-by-Line Logic)
+1. Initialize:
+HashMap<Character, Integer> mpp → stores latest index of each character.
+
+left = 0, right = 0 → window boundaries.
+
+len = 0 → stores the max length found so far.
+
+2. While right < n:
+Traverse the string with the right pointer.
+
+3. If character at right is already in mpp:
+
+left = Math.max(mpp.get(s.charAt(right)) + 1, left);
+This means a duplicate character is inside the window.
+
+Shift left just past the previous occurrence, but only if it’s ahead of the current left.
+
+4. Update the map:
+
+mpp.put(s.charAt(right), right);
+Store the latest index of the character (to handle future duplicates).
+
+5. Update max length:
+
+len = Math.max(len, right - left + 1);
+6. Move right pointer ahead.
+7. Return len as the final answer.
+🧪 Edge Cases
+1. Empty string
+Input: ""
+Output: 0
+
+No characters → max length is 0.
+
+2. All unique characters
+Input: "abcdef"
+Output: 6
+
+All characters are unique → the whole string is the answer.
+
+3. All characters are the same
+Input: "aaaaa"
+Output: 1
+
+Longest substring without repeat is any single character.
+
+4. Duplicate in the middle
+Input: "abcabcbb"
+
+First "abc" is valid → then duplicate 'a' comes again → reset window.
+Correct output: 3 (either "abc" or "bca")
+
+5. When duplicate character is before current left
+Input: "abba"
+
+'a' comes again at index 3, but previous 'a' was at 0 (before left, which is 2).
+
+java
+Copy
+Edit
+left = Math.max(0 + 1, 2) = 2
+We must not move left back to 1. This step is crucial and handled by Math.max(...).
+
+🔍 Why Each Line is Important
+Line	Why it's Important
+if (mpp.containsKey(...))	Detects duplicates
+left = Math.max(...)	Ensures left only moves forward; avoids shrinking window
+mpp.put(...)	Tracks the latest index of each character
+len = Math.max(...)	Keeps track of the maximum window length
+right++	Expands the window to the right
+
+🚫 What Happens Without Math.max(...)?
+
+left = mpp.get(s.charAt(right)) + 1;
+This could move left backward into the past (invalid), breaking the current window and including duplicates.
+
+Example:
+
+Input: "abba"
+
+This would incorrectly move left to index 1 instead of keeping it at 2, causing 'b' to appear twice in the window.
+
