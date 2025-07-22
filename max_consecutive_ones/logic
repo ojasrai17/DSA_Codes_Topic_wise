@@ -1,0 +1,111 @@
+✅ Logic of the Code (Step-by-Step)
+🔁 Sliding Window + Counting Zeros Approach
+Purpose: Find the length of the longest subarray containing only 1s after flipping at most k zeros to 1.
+
+Technique: Use a sliding window with two pointers (left and right) and a counter for zeros.
+
+🧠 Algorithm Breakdown (Line-by-Line Logic)
+1. Initialize:
+zeros = 0 → number of zeros in the current window.
+
+left = 0, right = 0 → window boundaries.
+
+maxlen = 0 → tracks the maximum length of a valid window.
+
+len = 0 → current window length.
+
+2. While right < nums.length:
+Traverse the array with the right pointer.
+
+3. If the current number is 0:
+java
+Copy
+Edit
+if (nums[right] == 0) {
+    zeros++;
+}
+Count the zero in the window.
+
+4. If number of zeros exceeds k:
+java
+Copy
+Edit
+if (zeros > k) {
+    if (nums[left] == 0) {
+        zeros--;
+    }
+    left++;
+}
+The window becomes invalid, so shrink it from the left.
+
+If the element at left is 0, decrease the zero count.
+
+Move left to shrink the window until zeros <= k.
+
+5. Update current window length:
+java
+Copy
+Edit
+if (zeros <= k) {
+    len = right - left + 1;
+}
+If the current window is valid, calculate its length.
+
+6. Update the maximum length:
+java
+Copy
+Edit
+maxlen = Math.max(len, maxlen);
+Keep track of the longest valid window found so far.
+
+7. Move right pointer ahead:
+Expand the window to include the next element.
+
+8. Return maxlen:
+This is the length of the longest subarray with at most k flipped zeros.
+
+🧪 Edge Cases
+1. Empty array
+Input: [], k = 1
+Output: 0
+
+No elements to process.
+
+2. No zeros in array
+Input: [1, 1, 1, 1], k = 2
+Output: 4
+
+Already all 1s, no need to flip anything.
+
+3. All zeros, and k is small
+Input: [0, 0, 0], k = 1
+Output: 1
+
+Can flip only one 0 → maximum one 1.
+
+4. Zeros within 1s
+Input: [1, 0, 1, 1, 0], k = 1
+
+Best subarray after flipping one 0 → [1, 0, 1, 1] or [1, 1, 0]
+Output: 4
+
+5. k = 0 (No flips allowed)
+Input: [1, 0, 1, 1, 0]
+Output: 2 (the longest sequence of 1s without any flip)
+
+🔍 Why Each Line is Important
+Line	Why it's Important
+if (nums[right] == 0)	Tracks how many zeros in the window
+if (zeros > k)	Ensures the window doesn't exceed the allowed flips
+if (nums[left] == 0) zeros--;	Correctly updates zero count while shrinking the window
+left++	Shrinks the window from the left to regain validity
+len = right - left + 1	Measures valid window length
+maxlen = Math.max(...)	Tracks the maximum length found
+
+✅ Time and Space Complexity
+Time Complexity: O(n)
+Each element is visited at most twice — once by right, once by left.
+
+Space Complexity: O(1)
+Only a few integer variables are used.
+
