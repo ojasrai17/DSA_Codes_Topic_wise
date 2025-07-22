@@ -1,0 +1,27 @@
+import java.util.*;
+
+class Solution {
+    public int totalFruit(int[] fruits) {
+        HashMap<Integer, Integer> basket = new HashMap<>();
+        int left = 0, right = 0, maxLen = 0;
+
+        while (right < fruits.length) {
+            int fruit = fruits[right];
+            basket.put(fruit, basket.getOrDefault(fruit, 0) + 1);
+
+            while (basket.size() > 2) {
+                int leftFruit = fruits[left];
+                basket.put(leftFruit, basket.get(leftFruit) - 1);
+                if (basket.get(leftFruit) == 0) {
+                    basket.remove(leftFruit);
+                }
+                left++;
+            }
+
+            maxLen = Math.max(maxLen, right - left + 1);
+            right++;
+        }
+
+        return maxLen;
+    }
+}
