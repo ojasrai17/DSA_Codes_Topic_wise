@@ -1,0 +1,47 @@
+📘 Documentation: Logic + Edge Cases — Sliding Window Method
+✅ Problem Statement:
+Given a binary array nums (consisting of only 0s and 1s) and an integer goal, return the number of non-empty contiguous subarrays whose sum is exactly equal to goal.
+
+✅ Core Logic:
+We solve this efficiently using a sliding window + difference trick:
+
+Count of subarrays with sum exactly equal to goal
+= countAtMost(goal) − countAtMost(goal - 1)
+
+✅ Why This Works:
+In a binary array (only 0s and 1s), all values are non-negative.
+
+This allows us to use a sliding window to count subarrays whose sum is at most k in O(n) time.
+
+The difference between:
+
+countAtMost(goal) → subarrays with sum ≤ goal
+
+countAtMost(goal - 1) → subarrays with sum < goal
+gives us the exact number of subarrays with sum = goal.
+
+✅ Sliding Window Details:
+Use two pointers left and right to create a window
+
+Keep a running sum of elements within the window
+
+If the sum exceeds k, shrink the window from the left
+
+For each position of right, the number of valid subarrays ending at right is (right - left + 1)
+
+✅ Edge Cases Handled:
+Edge Case	Description	Where in Code	Explanation
+goal = 0	Need subarrays with total sum 0	if (k < 0) return 0;	Prevents invalid case like countAtMost(-1)
+All elements are 0s	e.g. [0, 0, 0, 0]	Window never shrinks	All subarrays are valid (sum ≤ goal)
+All elements are 1s	e.g. [1, 1, 1]	Window shrinks on overflow	Only valid subarrays are counted
+Large goal not present in array	e.g. [0, 0, 0], goal = 3	Handled naturally	Returns 0 correctly
+Empty subarrays	Should not be counted	count += right - left + 1	Always at least one element
+goal > sum of array	e.g. [1, 0, 1], goal = 5	No subarray found	Still returns 0
+
+✅ Time and Space Complexity:
+Time Complexity: O(n)
+→ Each element is processed at most twice (once by right, once by left)
+
+Space Complexity: O(1)
+→ Constant extra space (no HashMap or extra arrays)
+
