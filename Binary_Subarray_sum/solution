@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] nums = {1, 0, 1, 0, 1};
+        int goal = 2;
+
+        Solution sol = new Solution();
+        int result = sol.numSubarraysWithSum(nums, goal);
+        System.out.println("Output: " + result);
+    }
+}
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return countSubarraysAtMost(nums, goal) - countSubarraysAtMost(nums, goal - 1);
+    }
+
+    private int countSubarraysAtMost(int[] nums, int k) {
+        if (k < 0) return 0;
+
+        int left = 0, sum = 0, count = 0;
+
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+
+            while (sum > k) {
+                sum -= nums[left++];
+            }
+
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+}
