@@ -1,0 +1,67 @@
+ere’s a clear explanation of the logic (with bullet points and edge cases) for solving the problem:
+“Count subarrays with exactly k odd numbers” using sliding window and no HashMap.
+
+✅ Main Logic
+We use the fact:
+
+javascript
+Copy
+Edit
+Number of subarrays with exactly k odd numbers = 
+      Number of subarrays with at most k odd numbers 
+    – Number of subarrays with at most (k - 1) odd numbers
+✅ Why this works
+atMost(k) gives all subarrays with 0 to k odd numbers.
+
+atMost(k - 1) gives all subarrays with 0 to (k - 1) odd numbers.
+
+Their difference gives subarrays with exactly k odd numbers.
+
+✅ Sliding Window: atMost Function
+java
+Copy
+Edit
+while (right < nums.length) {
+    if (nums[right] is odd) sum++;
+    while (sum > k) {
+        if (nums[left] is odd) sum--;
+        left++;
+    }
+    count += right - left + 1;
+    right++;
+}
+✅ Variable Meaning
+Variable	Meaning
+left	Start of current window
+right	End of current window (expanding rightward)
+sum	Number of odd numbers in current window
+count	Total number of valid subarrays with at most k odds
+
+✅ Why count += right - left + 1?
+It adds all valid subarrays ending at right and starting anywhere from left to right.
+
+That’s right - left + 1 subarrays.
+
+✅ Example Walkthrough:
+java
+Copy
+Edit
+nums = [1, 1, 2, 1, 1], k = 3
+At most 3 odd → returns 10
+
+At most 2 odd → returns 8
+✅ Final Answer: 10 - 8 = 2
+
+These 2 subarrays with exactly 3 odds:
+
+[1,1,2,1]
+
+[1,2,1,1]
+
+✅ Edge Cases
+Case	Explanation
+k == 0	Then countAtMost(k - 1) becomes countAtMost(-1) → should return 0. Code handles this by:
+if (k < 0) return 0;	
+All even numbers	No odd → all windows with 0 odds. So only atMost(0) matters.
+All odd numbers	Many possible windows — atMost logic efficiently tracks it.
+Empty array	Edge-safe, loop exits immediately.
