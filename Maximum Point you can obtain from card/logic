@@ -1,0 +1,52 @@
+✅ Step-by-Step Logic (Bullet Points):
+🟢 Goal: Find the maximum score by choosing exactly k cards from either the start or end of the array.
+
+🔁 Loop 1 (Initial setup):
+
+Pick the first k cards from the left.
+
+Calculate lsum = sum of first k elements.
+
+Initialize maxsum = lsum.
+
+🔁 Loop 2 (Sliding window):
+
+You’ll now remove one left card (from the end of the picked-left segment) and add one right card (from the end of the array).
+
+For every such configuration:
+
+Update lsum = lsum - nums[i] (removing a left card).
+
+Update rsum = rsum + nums[rightindex] (adding a right card).
+
+Compute total = lsum + rsum — this is the score for current configuration.
+
+Update maxsum = max(maxsum, total).
+
+Move rightindex-- to next card from the end.
+
+🔚 After all configurations are tried, return maxsum.
+
+🔍 Dry Run Example:
+java
+Copy
+Edit
+nums = [1, 2, 3, 4, 5, 6, 1], k = 3
+Step 1 (Initial lsum): 1 + 2 + 3 = 6
+
+maxsum = 6
+
+Now try:
+
+Remove 3, add 1 → 1 + 2 + 1 = 4 → maxsum = 6
+
+Remove 2, add 6 → 1 + 6 + 1 = 8 → maxsum = 8
+
+Remove 1, add 5 → 6 + 1 + 5 = 12 → maxsum = 12
+
+✅ Final answer = 12
+
+✅ Time & Space Complexity:
+Time: O(k) – loop runs k times for left + right adjustment.
+
+Space: O(1) – only variables used; no extra space.
