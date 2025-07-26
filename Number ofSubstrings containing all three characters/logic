@@ -1,0 +1,55 @@
+✅ Problem:
+You are given a string s consisting only of 'a', 'b', and 'c'.
+Your task is to count the number of substrings that contain at least one occurrence of each of the characters 'a', 'b', and 'c'.
+
+✅ Approach Overview:
+Use a single pass (O(n)) with a tracking array (lastseen) to store the last seen index of 'a', 'b', and 'c'.
+
+At each index i, if all three characters have been seen, count how many substrings end at index i and contain all three characters.
+
+🔁 Step-by-Step Logic (in bullet points):
+Initialize:
+
+cnt = 0 → stores the count of valid substrings.
+
+lastseen[3] = {-1, -1, -1} → stores the last seen index of 'a', 'b', and 'c'.
+
+Loop through the string (i = 0 to s.length() - 1):
+
+Update the lastseen index of the current character:
+
+java
+Copy
+Edit
+lastseen[s.charAt(i) - 'a'] = i;
+Check if all three characters have been seen at least once:
+
+java
+Copy
+Edit
+if (lastseen[0] != -1 && lastseen[1] != -1 && lastseen[2] != -1)
+If yes, then:
+
+The minimum of the three last-seen indices (min(lastseen[0], lastseen[1], lastseen[2])) tells you the earliest index from where a valid substring can start.
+
+So, the number of valid substrings ending at i is:
+
+java
+Copy
+Edit
+1 + min(lastseen[0], lastseen[1], lastseen[2])
+Add this to cnt.
+
+Return cnt as the final answer.
+
+📌 Key Insight:
+For any position i, a valid substring that ends at i must contain at least one 'a', 'b', and 'c'.
+
+The earliest such valid starting point is determined by the minimum index of the last-seen positions of the three characters.
+
+All substrings starting at any index from 0 to that minimum index, and ending at i, will be valid.
+
+⏱️ Time and Space Complexity:
+Time Complexity: O(n) — Single pass over the string.
+
+Space Complexity: O(1) — Fixed array of size 3.
