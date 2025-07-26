@@ -1,0 +1,48 @@
+Create a variable count to store the total number of valid substrings.
+
+Use two pointers: left and right to form a sliding window.
+
+Use a HashMap to store the frequency of characters in the current window.
+
+🔸 Sliding Window Expansion:
+Loop through the string using right pointer.
+
+For every character at s[right]:
+
+Add it to the map and update its count.
+
+🔸 Window Shrinking Condition:
+If the number of distinct characters in the map > k:
+
+Shrink the window from the left side.
+
+Decrease the count of s[left] in the map.
+
+If the count becomes 0, remove the character from the map.
+
+Move left forward until the map size is ≤ k.
+
+🔸 Count Valid Substrings:
+At each valid state (when map size ≤ k), all substrings ending at right and starting from left to right are valid.
+
+So, add (right - left + 1) to the count.
+
+🔸 Final Step:
+After the loop ends, return the value of count.
+
+🔁 Example Dry Run:
+s = "abcba", k = 2
+
+Window	Valid?	Count Added
+a	✅	1
+ab	✅	2
+abc	❌	shrink to bc, then ✅
+bcb	✅	3
+bcba	❌	shrink to ba, then ✅
+
+Total = 10 substrings
+
+⏱️ Time & Space Complexity:
+Time: O(n) – each character is processed at most twice.
+
+Space: O(k) – for storing up to k characters in the map.
